@@ -88,10 +88,10 @@ WSGI_APPLICATION = "edwelt_education.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'eduwelt_dev',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'NAME': 'edweltdb',
+        'USER': 'postgres',
+        'PASSWORD': 'ed123456789',
+        'HOST': 'database-1.cqpy662coslh.us-east-1.rds.amazonaws.com',
         'PORT': '5432',
     }
 }
