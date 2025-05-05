@@ -2,8 +2,8 @@ from django.db import models
 
 # Create your models here.
 class University(models.Model):
-    name = models.CharField(max_length=255)
-    location = models.CharField(max_length=255, blank=True)
+    name = models.TextField()
+    location = models.TextField(blank=True)
     description = models.TextField(blank=True)
     tambnail_image = models.ImageField(upload_to='tambnails/', null=True, blank=True)
     banner_image = models.ImageField(upload_to='banners/', null=True, blank=True)
