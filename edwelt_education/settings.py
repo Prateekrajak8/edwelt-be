@@ -50,6 +50,7 @@ DJANGO_APPS = [
 LOCAL_APPS = [
   'university',
   'user',
+  'news'
 ]
 THIRD_PARTY_APPS = [
     'corsheaders',
