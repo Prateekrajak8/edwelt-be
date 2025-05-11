@@ -9,6 +9,7 @@ class University(models.Model):
     banner_image = models.ImageField(upload_to='banners/', null=True, blank=True)
     logo_image = models.ImageField(upload_to='logos/', null=True, blank=True)
     brochure = models.FileField(upload_to='brochures/', null=True, blank=True)
+    highlights = models.JSONField(default=dict, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
