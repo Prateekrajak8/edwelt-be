@@ -4,6 +4,8 @@ from rest_framework import status
 from django.core.cache import cache
 import random
 
+from user.models import UserRegistration
+
 class RegisterUserAPIView(APIView):
     def post(self, request, *args, **kwargs):
         # Extract fields from request data
@@ -24,7 +26,15 @@ class RegisterUserAPIView(APIView):
 
         if errors:
             return Response({"errors": errors}, status=status.HTTP_400_BAD_REQUEST)
-
+        user = UserRegistration.objects.filter(phone_number=phone_number)
+        if not user.exists():
+            UserRegistration.objects.create(
+                first_name=first_name,
+                last_name=last_name,
+                phone_number=phone_number,
+                role=role,
+                neet_rank=neet_rank
+            )
         # Generate OTP
         otp = str(random.randint(100000, 999999))
 

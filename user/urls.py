@@ -5,5 +5,5 @@ from user.api import RegisterUserAPIView
 
 
 urlpatterns = [
-    path('api/register/', RegisterUserAPIView.as_view(), name='register_user'),
+    path('register/', RegisterUserAPIView.as_view(), name='register_user'),
 ]
