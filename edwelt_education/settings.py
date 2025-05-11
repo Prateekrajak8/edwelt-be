@@ -49,6 +49,7 @@ DJANGO_APPS = [
 ]
 LOCAL_APPS = [
   'university',
+  'user',
 ]
 THIRD_PARTY_APPS = [
     'corsheaders',
