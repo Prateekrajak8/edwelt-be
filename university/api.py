@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from university.models import University
+from university.models import Course, University, UniversityPlacement
 from .serializers import UniversitySerializer
 from django.shortcuts import get_object_or_404
 
@@ -36,3 +36,48 @@ class UniversityDetailAPIView(APIView):
         university = get_object_or_404(University, pk=pk)
         university.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class CourseByUniversityView(APIView):
+    def get(self, request, university_id):
+        courses = Course.objects.filter(university__id=university_id)
+
+        data = []
+        for course in courses:
+            data.append({
+                "id": course.id,
+                "university": course.university.id,
+                "name": course.name,
+                "course_type": course.course_type,
+                "level": course.level,
+                "certificate_program": course.certificate_program,
+                "duration": course.duration,
+                "total_fees": course.total_fees,
+                "seats": course.seats,
+                "exams": course.exams,
+                "about": course.about,
+                "created_at": course.created_at,
+                "updated_at": course.updated_at,
+            })
+
+        return Response(data, status=status.HTTP_200_OK)
+    
+class UniversityPlacementByUniversityView(APIView):
+    def get(self, request, university_id):
+        placements = UniversityPlacement.objects.filter(university__id=university_id)
+
+        data = []
+        for placement in placements:
+            data.append({
+                "id": placement.id,
+                "university": placement.university.id,
+                "level": placement.level,
+                "year_span": placement.year_span,
+                "gender": placement.gender,
+                "details": placement.details,
+                "about": placement.about,
+                "key_highlights": placement.key_highlights,
+                "created_at": placement.created_at,
+                "updated_at": placement.updated_at,
+            })
+
+        return Response(data, status=status.HTTP_200_OK)
