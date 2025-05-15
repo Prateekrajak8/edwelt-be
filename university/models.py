@@ -11,7 +11,7 @@ class University(models.Model):
     brochure = models.FileField(upload_to='brochures/', null=True, blank=True)
     highlights = models.JSONField(default=dict, blank=True)
     applygrad_rankings = models.JSONField(default=dict, blank=True)
-    map_url = models.URLField(default='', blank=True)
+    map_url = models.CharField(max_length=1000, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
