@@ -53,7 +53,15 @@ class CourseByUniversityView(APIView):
                 "duration": course.duration,
                 "total_fees": course.total_fees,
                 "seats": course.seats,
-                "exams": course.exams,
+                "exams": [
+                    {
+                        "id": exam.id,
+                        "name": exam.name,
+                        "application_start_date": exam.application_start_date,
+                        "application_end_date": exam.application_end_date
+                    }
+                    for exam in course.exams.all()
+                ],
                 "about": course.about,
                 "created_at": course.created_at,
                 "updated_at": course.updated_at,
