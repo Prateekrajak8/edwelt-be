@@ -55,10 +55,21 @@ class Course(models.Model):
     duration = models.CharField(max_length=50)  # e.g., "5Y 6M"
     total_fees = models.CharField(max_length=50)  # e.g., "6.79K INR"
     seats = models.PositiveIntegerField()
-    exams = models.CharField(max_length=255)  # e.g., "NEET", "AIIMS PG", etc.
+    exams = models.ManyToManyField('Exam', related_name='courses')  # e.g., "NEET", "AIIMS PG", etc.
     about = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.name} - {self.university.name}"
+    
+class Exam(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    application_start_date = models.DateField(null=True, blank=True)
+    application_end_date = models.DateField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+    def __str__(self):
+        return self.name

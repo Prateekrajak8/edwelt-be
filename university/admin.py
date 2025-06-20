@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import University, UniversityPlacement, Course
+from .models import Exam, University, UniversityPlacement, Course
 
 @admin.register(University)
 class UniversityAdmin(admin.ModelAdmin):
@@ -19,5 +19,13 @@ class UniversityPlacementAdmin(admin.ModelAdmin):
 class CourseAdmin(admin.ModelAdmin):
     list_display = ('name', 'university', 'level', 'duration', 'total_fees', 'seats', 'created_at', 'updated_at')
     list_filter = ('level', 'university', 'created_at')
-    search_fields = ('name', 'university__name', 'exams')
+    search_fields = ('name', 'university__name', 'exams__name')
+    readonly_fields = ('created_at', 'updated_at')
+    filter_horizontal = ('exams',) 
+
+@admin.register(Exam)
+class ExamAdmin(admin.ModelAdmin):
+    list_display = ('name', 'application_start_date', 'application_end_date', 'created_at', 'updated_at')
+    list_filter = ('name', 'application_start_date')
+    search_fields = ('name', 'application_start_date')
     readonly_fields = ('created_at', 'updated_at')
