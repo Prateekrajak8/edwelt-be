@@ -6,6 +6,7 @@ class UniversityAdmin(admin.ModelAdmin):
     list_display = ('name', 'location', 'created_at', 'updated_at')
     search_fields = ('name', 'location')
     list_filter = ('created_at', 'updated_at')
+    filter_horizontal = ('exams',) 
     readonly_fields = ('created_at', 'updated_at')
 
 @admin.register(UniversityPlacement)

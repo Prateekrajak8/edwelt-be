@@ -12,6 +12,7 @@ class University(models.Model):
     highlights = models.JSONField(default=dict, blank=True)
     applygrad_rankings = models.JSONField(default=dict, blank=True)
     map_url = models.CharField(max_length=1000, null=True, blank=True)
+    exams = models.ManyToManyField('Exam', related_name='university')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
