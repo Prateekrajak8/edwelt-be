@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from university.models import Course, University, UniversityPlacement
+from university.models import Course, University, UniversityPlacement, counsellingPrograms, counsellingTimelines
 from .serializers import UniversitySerializer
 from django.shortcuts import get_object_or_404
 
@@ -89,3 +89,22 @@ class UniversityPlacementByUniversityView(APIView):
             })
 
         return Response(data, status=status.HTTP_200_OK)
+    
+class CounsellingView(APIView):
+    def get(self, request):
+        exam_type = request.GET.get('exam_type')
+        if not exam_type:
+            return Response({'error': 'exam_type parameter is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        programs = counsellingPrograms.objects.filter(exam_type=exam_type, is_active=True).values('id', 'program', 'exam_type', 'is_active')
+        return Response(list(programs), status=status.HTTP_200_OK)
+        
+    def post(self, request):
+        data = request.data
+        program = data.get('program')
+        exam_type = data.get('exam_type')
+        if not program or not exam_type:
+            return Response({'error': 'Both program and exam_type are required.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        counselling_timelines = counsellingTimelines.objects.filter(program__program=program, program__exam_type=exam_type, is_active=True)
+        return Response(counselling_timelines, status=status.HTTP_200_OK)
