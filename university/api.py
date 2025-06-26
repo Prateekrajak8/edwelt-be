@@ -4,6 +4,7 @@ from rest_framework import status
 from university.models import Course, University, UniversityPlacement, counsellingPrograms, counsellingTimelines
 from .serializers import UniversitySerializer
 from django.shortcuts import get_object_or_404
+from django.forms.models import model_to_dict
 
 class UniversityListCreateAPIView(APIView):
     def get(self, request):
@@ -106,5 +107,6 @@ class CounsellingView(APIView):
         if not program or not exam_type:
             return Response({'error': 'Both program and exam_type are required.'}, status=status.HTTP_400_BAD_REQUEST)
         
-        counselling_timelines = counsellingTimelines.objects.filter(program__program=program, program__exam_type=exam_type, is_active=True)
-        return Response(counselling_timelines, status=status.HTTP_200_OK)
+        counselling_timelines = counsellingTimelines.objects.filter(program__program=program, program__exam_type=exam_type, is_active=True).values()
+
+        return Response(list(counselling_timelines), status=status.HTTP_200_OK)
